@@ -5,5 +5,5 @@ from .serializers import CompaniesSerializer
 
 
 class CompaniesViewSet(viewsets.ModelViewSet):
-  queryset = Companies.objects.all()
-  serializer_class = CompaniesSerializer
+    queryset = Companies.objects.all()
+    serializer_class = CompaniesSerializer
