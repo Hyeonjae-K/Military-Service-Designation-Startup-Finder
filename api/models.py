@@ -1,7 +1,12 @@
 from django.db import models
 
+
 class Companies(models.Model):
-  name = models.CharField(max_length=64)
-  slug = models.CharField(max_length=64)
-  amount = models.IntegerField()
-  logo = models.CharField(max_length=256)
+    ko_name = models.CharField(max_length=64)
+    en_name = models.CharField(max_length=64)
+    amount = models.IntegerField(null=True)
+    category = models.CharField(max_length=32, null=True)
+    industry = models.CharField(max_length=16, null=True)
+    scale = models.CharField(max_length=16, null=True)
+    logo = models.CharField(max_length=256, null=True)
+    update_date = models.DateTimeField(null=True)
