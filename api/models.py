@@ -9,3 +9,4 @@ class Companies(models.Model):
     industry = models.CharField(max_length=16, null=True)
     scale = models.CharField(max_length=16, null=True)
     logo = models.CharField(max_length=256, null=True)
+    update_date = models.DateTimeField(null=True)
