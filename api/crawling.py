@@ -42,8 +42,6 @@ def _get_data():
         }
         if startup['en_name'] in amounts:
             startup['amount'] = amounts[startup['en_name']]
-        else:
-            startup['amount'] = None
         try:
             startup['logo'] = item['logo']['url']
         except:
