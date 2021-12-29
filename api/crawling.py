@@ -23,7 +23,7 @@ def _get_data():
         'https://work.mma.go.kr/caisBYIS/search/downloadBYJJEopCheExcel.do', xls_path)
 
     df = pd.read_excel(xls_path)[['업체명', '업종', '기업규모']]
-    del_strs = ['(주)', '(유)', '(합)', '㈜']
+    del_strs = ['(주)', '(유)', '(합)', '㈜', '주식회사']
     company_names = df['업체명'].values.tolist()[:-1]
     for x in del_strs:
         company_names = [name.replace(x, '').strip() for name in company_names]
@@ -80,6 +80,6 @@ def update_data():
             new_companies.append(company)
     
     if update_companies:
-        Companies.objects.bulk_update(update_companies, ['date_time'])
+        Companies.objects.bulk_update(update_companies, ['update_date'])
     if new_companies:
         Companies.objects.bulk_create(new_companies)
