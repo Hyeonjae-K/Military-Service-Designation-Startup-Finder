@@ -19,8 +19,8 @@ company_names = company_industries = company_scales = None
 def _get_data():
     global startups, company_names, company_industries, company_scales
 
-    # request.urlretrieve(
-    #     'https://work.mma.go.kr/caisBYIS/search/downloadBYJJEopCheExcel.do', xls_path)
+    request.urlretrieve(
+        'https://work.mma.go.kr/caisBYIS/search/downloadBYJJEopCheExcel.do', xls_path)
 
     df = pd.read_excel(xls_path)[['업체명', '업종', '기업규모']]
     del_strs = ['(주)', '(유)', '(합)', '㈜', '주식회사']
