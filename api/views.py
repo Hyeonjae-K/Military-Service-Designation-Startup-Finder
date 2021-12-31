@@ -9,5 +9,6 @@ def index(request):
     companies = Companies.objects.order_by('-amount')
     paginator = Paginator(companies, 15)
     page_obj = paginator.get_page(page)
-    context = {'companies': page_obj, 'page': page}
+    context = {'companies': page_obj, 'page': page,
+               'last_page_num': paginator.num_pages}
     return render(request, 'index.html', context=context)
