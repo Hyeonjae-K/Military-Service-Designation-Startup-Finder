@@ -1,13 +1,11 @@
+from .models import Companies
+import requests
+import pandas as pd
+from datetime import date
+from urllib import request
+from django.utils import timezone
 import django
 django.setup()
-
-from django.utils import timezone
-from urllib import request
-from datetime import date
-import pandas as pd
-import requests
-
-from .models import Companies
 
 
 today = str(date.today())
@@ -71,6 +69,9 @@ def update_data():
     for data in companies:
         try:
             company = Companies.objects.get(en_name=data['en_name'])
+            company.amount = data['amount']
+            company.scale = data['scale']
+            company.logo = data['logo']
             company.update_date = datetime
             update_companies.append(company)
         except:
@@ -79,6 +80,7 @@ def update_data():
             new_companies.append(company)
 
     if update_companies:
-        Companies.objects.bulk_update(update_companies, ['update_date'])
+        Companies.objects.bulk_update(
+            update_companies, ['amount', 'scale', 'logo', 'update_date'])
     if new_companies:
         Companies.objects.bulk_create(new_companies)
