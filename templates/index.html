@@ -14,7 +14,28 @@
     <title>병역 지정 스타트업 목록</title>
   </head>
   <body>
-    <div class="container my-3">
+    <div class="container">
+      <div class="row input-group my-3" style="margin: 0 auto;">
+        <input id="companyName" type="text" class="form-control col-8" placeholder="업체명 입력">
+        <div class="col-3">
+          <select id="industryFilter" class="form-control so">
+            <option value="" {% if fil == '' %}selected{% endif %}>분야</option>
+            <option value="게임S/W" {% if fil == '게임S/W' %}selected{% endif %}>게임S/W</option>
+            <option value="기계" {% if fil == '기계' %}selected{% endif %}>기계</option>
+            <option value="농산물가공" {% if fil == '농산물가공' %}selected{% endif %}>농산물가공</option>
+            <option value="생활용품" {% if fil == '생활용품' %}selected{% endif %}>생활용품</option>
+            <option value="섬유" {% if fil == '섬유' %}selected{% endif %}>섬유</option>
+            <option value="식음료" {% if fil == '식음료' %}selected{% endif %}>식음료</option>
+            <option value="애니메이션" {% if fil == '애니메이션' %}selected{% endif %}>애니메이션</option>
+            <option value="의료의약" {% if fil == '의료의약' %}selected{% endif %}>의료의약</option>
+            <option value="전자" {% if fil == '전자' %}selected{% endif %}>전자</option>
+            <option value="정보처리" {% if fil == '정보처리' %}selected{% endif %}>정보처리</option>
+            <option value="통신기기" {% if fil == '통신기기' %}selected{% endif %}>통신기기</option>
+          </select>
+        </div>
+        <a role="button" id="searchBtn" class="btn btn-outline-secondary col-2" onclick="updateFilter();">Search</a>
+      </div>
+
       <table class="table table-hover table-bordered align-middle">
         <thead class="table-light text-center">
           <tr>
@@ -52,7 +73,7 @@
         <ul class="pagination justify-content-center">
           {% if companies.has_previous %}
           <li class="page-item">
-            <a class="page-link" href="?page=1" aria-label="Previous">
+            <a class="page-link" href="?page=1&kw={{ keyword }}&fil={{ filter }}" aria-label="Previous">
               <span aria-hidden="true">&laquo;</span>
             </a>
           </li>
@@ -69,14 +90,14 @@
           {% if page_num == companies.number %}
           <li class="page-item active"><a class="page-link" href="#">{{ page_num }}</a></li>
           {% else %}
-          <li class="page-item"><a class="page-link" href="?page={{ page_num }}">{{ page_num }}</a></li>
+          <li class="page-item"><a class="page-link" href="?page={{ page_num }}&kw={{ keyword }}&fil={{ filter }}">{{ page_num }}</a></li>
           {% endif %}
           {% endif %}
           {% endfor %}
 
           {% if companies.has_next %}
           <li class="page-item">
-            <a class="page-link" href="?page={{ last_page_num }}" aria-label="Next">
+            <a class="page-link" href="?page={{ last_page_num }}&kw={{ keyword }}&fil={{ filter }}" aria-label="Next">
               <span aria-hidden="true">&raquo;</span>
             </a>
           </li>
@@ -101,5 +122,18 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
     -->
+
+    <script type="text/javascript">
+      const keyword = document.getElementById("companyName");
+      const filter = document.getElementById("industryFilter");
+
+      function updateFilter() {
+        const search_btn = document.getElementById("searchBtn");
+        var kw = keyword.value;
+        var fil = filter.options[filter.selectedIndex].value;
+
+        search_btn.href = `?page=1&kw=${kw}&fil=${fil}`
+      }
+    </script>
   </body>
 </html>
