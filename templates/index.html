@@ -16,7 +16,7 @@
   <body>
     <div class="container">
       <div class="row input-group my-3" style="margin: 0 auto;">
-        <input id="companyName" type="text" class="form-control col-8" placeholder="업체명 입력">
+        <input id="companyName" type="text" class="form-control col-8" placeholder="업체명 입력" value="{{ kw }}">
         <div class="col-3">
           <select id="industryFilter" class="form-control so">
             <option value="" {% if fil == '' %}selected{% endif %}>분야</option>
@@ -73,7 +73,7 @@
         <ul class="pagination justify-content-center">
           {% if companies.has_previous %}
           <li class="page-item">
-            <a class="page-link" href="?page=1&kw={{ keyword }}&fil={{ filter }}" aria-label="Previous">
+            <a class="page-link" href="?page=1&kw={{ kw }}&fil={{ fil }}" aria-label="Previous">
               <span aria-hidden="true">&laquo;</span>
             </a>
           </li>
@@ -90,14 +90,14 @@
           {% if page_num == companies.number %}
           <li class="page-item active"><a class="page-link" href="#">{{ page_num }}</a></li>
           {% else %}
-          <li class="page-item"><a class="page-link" href="?page={{ page_num }}&kw={{ keyword }}&fil={{ filter }}">{{ page_num }}</a></li>
+          <li class="page-item"><a class="page-link" href="?page={{ page_num }}&kw={{ kw }}&fil={{ fil }}">{{ page_num }}</a></li>
           {% endif %}
           {% endif %}
           {% endfor %}
 
           {% if companies.has_next %}
           <li class="page-item">
-            <a class="page-link" href="?page={{ last_page_num }}&kw={{ keyword }}&fil={{ filter }}" aria-label="Next">
+            <a class="page-link" href="?page={{ last_page_num }}&kw={{ kw }}&fil={{ fil }}" aria-label="Next">
               <span aria-hidden="true">&raquo;</span>
             </a>
           </li>
