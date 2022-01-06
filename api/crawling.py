@@ -11,6 +11,14 @@ company_names = company_industries = company_scales = None
 startups = {}
 
 
+def get_msd_companies():
+    companies = {}
+    file_path = 'data_files/%s.xls' % date.today()
+    request.urlretrieve(
+        'https://work.mma.go.kr/caisBYIS/search/downloadBYJJEopCheExcel.do', file_path)
+    df = pd.read_excel(file_path)[['업체명', '업종', '기업규모']]
+
+
 def _get_data():
     global startups, company_names, company_industries, company_scales
     today = str(date.today())

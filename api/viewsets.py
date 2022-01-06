@@ -5,6 +5,7 @@ from .models import Startups, Recruitments
 from .serializers import StartupsSerializer, RecruitmentsSerializer
 from .crawling import update_data
 
+# update_data()
 sched = BackgroundScheduler()
 sched.add_job(update_data, 'cron', hour=12)
 sched.start()
