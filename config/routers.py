@@ -1,6 +1,6 @@
 from rest_framework import routers
-from api.viewsets import CompaniesViewSet
+from api.viewsets import StartupsViewSet
 
 router = routers.DefaultRouter()
 
-router.register(r'companies', CompaniesViewSet)
+router.register(r'startups', StartupsViewSet)

@@ -1,4 +1,4 @@
-from .models import Companies
+from .models import Startups
 import requests
 import pandas as pd
 from datetime import date
@@ -68,19 +68,19 @@ def update_data():
 
     for data in companies:
         try:
-            company = Companies.objects.get(en_name=data['en_name'])
+            company = Startups.objects.get(en_name=data['en_name'])
             company.amount = data['amount']
             company.scale = data['scale']
             company.logo = data['logo']
             company.update_date = datetime
             update_companies.append(company)
         except:
-            company = Companies(ko_name=data['ko_name'], en_name=data['en_name'], amount=data['amount'], category=data['category'],
+            company = Startups(ko_name=data['ko_name'], en_name=data['en_name'], amount=data['amount'], category=data['category'],
                                 industry=data['industry'], scale=data['scale'], logo=data['logo'], update_date=datetime)
             new_companies.append(company)
 
     if update_companies:
-        Companies.objects.bulk_update(
+        Startups.objects.bulk_update(
             update_companies, ['amount', 'scale', 'logo', 'update_date'])
     if new_companies:
-        Companies.objects.bulk_create(new_companies)
+        Startups.objects.bulk_create(new_companies)

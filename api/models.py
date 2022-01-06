@@ -1,7 +1,7 @@
 from django.db import models
 
 
-class Companies(models.Model):
+class Startups(models.Model):
     en_name = models.CharField(max_length=64, primary_key=True)
     ko_name = models.CharField(max_length=64)
     amount = models.IntegerField(default=0)
