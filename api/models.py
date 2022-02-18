@@ -1,4 +1,6 @@
+from email.policy import default
 from django.db import models
+from django.utils import timezone
 
 
 class Startups(models.Model):
@@ -9,7 +11,7 @@ class Startups(models.Model):
     industry = models.CharField(max_length=16)
     scale = models.CharField(max_length=16)
     logo = models.CharField(max_length=256, null=True)
-    update_date = models.DateTimeField()
+    update_date = models.DateTimeField(default=timezone.now)
 
 
 class Recruitments(models.Model):
@@ -18,4 +20,4 @@ class Recruitments(models.Model):
     response_rate = models.FloatField()
     response_day = models.IntegerField()
     logo = models.CharField(max_length=256)
-    update_date = models.DateField()
+    update_date = models.DateField(default=timezone.now)

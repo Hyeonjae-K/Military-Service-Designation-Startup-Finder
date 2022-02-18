@@ -82,7 +82,7 @@ def update_data():
             update_companies.append(company)
         except:
             company = Startups(ko_name=data['ko_name'], en_name=data['en_name'], amount=data['amount'], category=data['category'],
-                               industry=data['industry'], scale=data['scale'], logo=data['logo'], update_date=datetime)
+                               industry=data['industry'], scale=data['scale'], logo=data['logo'])
             new_companies.append(company)
 
     if update_companies:
