@@ -1,4 +1,4 @@
-from .models import Companies
+from .models import Startups
 import requests
 import pandas as pd
 from datetime import date
@@ -7,19 +7,25 @@ from django.utils import timezone
 import django
 django.setup()
 
-
-today = str(date.today())
-xls_path = 'data_files/%s.xls' % today
-startups = {}
 company_names = company_industries = company_scales = None
+startups = {}
+
+
+def get_msd_companies():
+    companies = {}
+    file_path = 'data_files/%s.xls' % date.today()
+    request.urlretrieve(
+        'https://work.mma.go.kr/caisBYIS/search/downloadBYJJEopCheExcel.do', file_path)
+    df = pd.read_excel(file_path)[['업체명', '업종', '기업규모']]
 
 
 def _get_data():
     global startups, company_names, company_industries, company_scales
+    today = str(date.today())
+    xls_path = 'data_files/%s.xls' % today
 
     request.urlretrieve(
         'https://work.mma.go.kr/caisBYIS/search/downloadBYJJEopCheExcel.do', xls_path)
-
     df = pd.read_excel(xls_path)[['업체명', '업종', '기업규모']]
     del_strs = ['(주)', '(유)', '(합)', '㈜', '주식회사']
     company_names = df['업체명'].values.tolist()[:-1]
@@ -68,19 +74,19 @@ def update_data():
 
     for data in companies:
         try:
-            company = Companies.objects.get(en_name=data['en_name'])
+            company = Startups.objects.get(en_name=data['en_name'])
             company.amount = data['amount']
             company.scale = data['scale']
             company.logo = data['logo']
             company.update_date = datetime
             update_companies.append(company)
         except:
-            company = Companies(ko_name=data['ko_name'], en_name=data['en_name'], amount=data['amount'], category=data['category'],
-                                industry=data['industry'], scale=data['scale'], logo=data['logo'], update_date=datetime)
+            company = Startups(ko_name=data['ko_name'], en_name=data['en_name'], amount=data['amount'], category=data['category'],
+                               industry=data['industry'], scale=data['scale'], logo=data['logo'])
             new_companies.append(company)
 
     if update_companies:
-        Companies.objects.bulk_update(
+        Startups.objects.bulk_update(
             update_companies, ['amount', 'scale', 'logo', 'update_date'])
     if new_companies:
-        Companies.objects.bulk_create(new_companies)
+        Startups.objects.bulk_create(new_companies)
